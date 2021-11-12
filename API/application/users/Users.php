@@ -37,6 +37,9 @@ class Users
         }
     }
 
+    public function getGroups() {
+        return $this->db->getGroups();
+    }
 }
 
 

@@ -68,4 +68,7 @@ class Application
         return $this->subjects->uploadShpora($params);
     }
 
+    public function getGroups() {
+        return $this->users->getGroups();
+    }
 }

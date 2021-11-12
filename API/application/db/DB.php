@@ -78,6 +78,7 @@ class DB {
             'access' => true 
         );
     }
+
     
     function login($params)
     {
@@ -89,62 +90,18 @@ class DB {
         if($query){
             return array(
                 'name' => $query['name'],
+                'login' => $query['login'],
                 'token' => $query['token'],
-                'group' => $params['group'],
-                'course' => $params['course']
+                'group' => $query['group'],
+                'course' => $query['course']
             );
         }
     }
-    
-    /*function registration($params)
-    {
-        $hash = $params['hash'];
-        $result = mysqli_query($this->connection, "INSERT INTO users (hash, course, direction) VALUES ('$hash', 1 ,'iivt')");
-        return array (
-            'access' => true
-        );
+
+    public function getGroups() {
+        $query = "SELECT * FROM `groups`";
+        return $this->db->query($query)
+            ->fetchAll(PDO::FETCH_ASSOC);
     }
-   /* function login($hash,$rand)
-    {
-        $result = mysqli_query($this->connection,"SELECT * FROM users");
-        while ($record  = mysqli_fetch_assoc($result)){
-            $token = md5($record['hash'].$rand);
-            if ($token == $hash) {
-                return array(
-                    'name' => 'admin',
-                    'token' => $token
-                );
-            }
-        }
-    }*/
 }
 
-   /* function __construct(){
-        $this->connection = mysqli_connect('localhost', 'root','root', 'shporhub');
-        if(!$this->connection){
-            print_r('Я не подключился( ');
-        }
-    }
-
-    function registration($params)
-    {
-        $hash = $params['hash'];
-        $result = mysqli_query($this->connection, "INSERT INTO users (hash, course, direction) VALUES ('$hash', 1 ,'iivt')");
-        return array (
-            'access' => true
-        );
-    }
-
-    function login($hash,$rand)
-    {
-        $result = mysqli_query($this->connection,"SELECT * FROM users");
-        while ($record  = mysqli_fetch_assoc($result)){
-            $token = md5($record['hash'].$rand);
-            if ($token == $hash) {
-                return array(
-                    'name' => 'admin',
-                    'token' => $token
-                );
-            }
-        }
-    }*/
