@@ -60,6 +60,8 @@ class DB {
     }
 
     public function addUser($params){
+        $group_id=$params['group'];
+        $course =$params['course'];
         $name = $params['name'];
         $token= md5($params['hash']);
         $login = $params['login'];
@@ -70,9 +72,10 @@ class DB {
                 'access' => false
             );
         }
+        print_r($group_id);
         $query = "INSERT INTO users
         (login,name,hash, course, group_id, token, is_admin)
-        VALUES('$login','$name','$hash', 1 , 1,'$token', false)";
+        VALUES('$login','$name','$hash', '$course' ,'$group_id','$token', false)";
         $this->db->query($query);
         return array(
             'access' => true 
