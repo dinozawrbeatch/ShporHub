@@ -16,9 +16,6 @@
     
         public function updateProfile($params)
         {
-            print_r($params['course']);
-            print_r($params['direction']);
             return true;
         }
-    
     }

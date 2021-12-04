@@ -38,7 +38,20 @@ class Application
 
     public function registration($params)
     { 
-        return $this->users->registration($params);
+        if ($params['login'] && 
+            $params['hash'] &&
+            $params['name'] &&
+            $params['course'] &&
+            $params['group']
+        ) {
+            return $this->users->registration(
+                $params['login'], 
+                $params['hash'], 
+                $params['name'],
+                $params['course'], 
+                $params['group']
+            );
+        }
     }
 
     public function getProfile($params) {

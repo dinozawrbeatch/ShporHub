@@ -26,23 +26,23 @@ class DB {
     }
 
     public function getUser($login) {
-        $query = 'SELECT * 
+        $query = "SELECT * 
             FROM users 
-            WHERE login="'.$login.'"';
+            WHERE login='$login'";
         return $this->db->query($query)
             ->fetchObject();
     }
 
     public function getUserByToken($token) {
-        $query = 'SELECT * 
+        $query = "SELECT * 
             FROM users 
-            WHERE token="'.$token.'"';
+            WHERE token='$token'";
         return $this->db->query($query)
             ->fetchObject();
     }
 
     public function getUsers() {
-        $query = 'SELECT * FROM users';
+        $query = "SELECT * FROM users";
         $stmt = $this->db->query($query);
         $result = array();
         while ($row = $stmt->fetch(PDO::FETCH_OBJ)) {
@@ -52,59 +52,37 @@ class DB {
     }
 
     public function updateToken($id, $token) {
-        $query = 'UPDATE users 
-            SET token="'.$token.'" 
-            WHERE id='.$id;
+        $query = "UPDATE users 
+            SET token='$token' 
+            WHERE id='$id'";
         $this->db->query($query);
         return true;
     }
 
-    public function addUser($params){
-        $group_id=$params['group'];
-        $course =$params['course'];
-        $name = $params['name'];
-        $token= md5($params['hash']);
-        $login = $params['login'];
-        $hash = $params['hash'];
-        if($this->getUser($login)){
-            print_r('Такой логин занят');
-            return array(
-                'access' => false
-            );
-        }
-        print_r($group_id);
+    public function addUser($login, $hash, $name, $course, $group_id){
+        $token = md5($hash);
         $query = "INSERT INTO users
         (login,name,hash, course, group_id, token, is_admin)
         VALUES('$login','$name','$hash', '$course' ,'$group_id','$token', false)";
         $this->db->query($query);
-        return array(
-            'access' => true 
-        );
+        return true;    
     }
 
-    
-    function login($params)
+    /*
+    function login($login, $rand)
     {
-        $hash = $params['hash'];
-        $login = $params['login'];
-        $hash = md5($params['hash'].$params['rand']);
-        print_r($hash);
-        $query = "SELECT * FROM users WHERE login='$login'AND hash='$hash'";
-        if($query){
-            return array(
-                'name' => $query['name'],
-                'login' => $query['login'],
-                'token' => $query['token'],
-                'group' => $query['group'],
-                'course' => $query['course']
-            );
-        }
-    }
+  
+    }*/
 
     public function getGroups() {
         $query = "SELECT * FROM `groups`";
         return $this->db->query($query)
             ->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getGroup($id) {
+        $query = "SELECT * FROM groups WHERE id=".$id;
+        return $this->db->query($query)->fetchObject();
     }
 }
 
