@@ -1,33 +1,35 @@
 <?php
-require_once('db/DB.php');
-require_once('users/Users.php');
-require_once('profile/Profile.php');
-require_once('subjects/Subjects.php');
+require_once 'db/DB.php';
+require_once 'users/Users.php';
+require_once 'profile/Profile.php';
+require_once 'subjects/Subjects.php';
 
 class Application
 {
-    function __construct()
+    public function __construct()
     {
         $db = new DB();
         $this->users = new Users($db);
         $this->profile = new Profile($db);
-        $this->subjects =  new Subjects($db);
+        $this->subjects = new Subjects($db);
     }
 
-    public function login($params) {
-        if ($params['login'] && 
-            $params['hash'] && 
+    public function login($params)
+    {
+        if ($params['login'] &&
+            $params['hash'] &&
             $params['rand']
         ) {
             return $this->users->login(
-                $params['login'], 
-                $params['hash'], 
+                $params['login'],
+                $params['hash'],
                 $params['rand']
             );
         }
     }
 
-    public function logout($params) {
+    public function logout($params)
+    {
         if ($params['token']) {
             $user = $this->users->getUser($params['token']);
             if ($user) {
@@ -37,33 +39,35 @@ class Application
     }
 
     public function registration($params)
-    { 
-        if ($params['login'] && 
+    {
+        if ($params['login'] &&
             $params['hash'] &&
             $params['name'] &&
             $params['course'] &&
             $params['group']
         ) {
             return $this->users->registration(
-                $params['login'], 
-                $params['hash'], 
+                $params['login'],
+                $params['hash'],
                 $params['name'],
-                $params['course'], 
+                $params['course'],
                 $params['group']
             );
         }
     }
 
-    public function getProfile($params) {
-        $user = $this->users->getUser($params['token']);
-        if ($user) {
-            return $this->profile->getProfile($user->id);
-        }
-    }
-
     public function updateProfile($params)
     {
-        return $this->profile->updateProfile($params);
+       
+        if ($params['course'] &&
+            $params['group'] &&
+            $params['token']) {
+            return $this->profile->updateProfile(
+                $params['course'],
+                $params['group'],
+                $params['token']
+            );
+        }
     }
 
     public function getLessons()
@@ -81,7 +85,8 @@ class Application
         return $this->subjects->uploadShpora($params);
     }
 
-    public function getGroups() {
+    public function getGroups()
+    {
         return $this->users->getGroups();
     }
 }

@@ -3,19 +3,10 @@
     {
         function __construct($db)
         {
-            
+            $this->db = $db;
         }
     
-        public function getProfile()
-        {
-            return array(
-                'course' => 3,
-                'direction' => 'iivt'
-            );
-        }
-    
-        public function updateProfile($params)
-        {
-            return true;
+        public function updateProfile($course, $group_id, $token){
+            return $this->db->updateProfile($course, $group_id, $token);
         }
     }

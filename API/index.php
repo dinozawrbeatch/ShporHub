@@ -13,7 +13,6 @@
                 case 'login': return $app->login($params);
                 case 'logout': return $app->logout($params);
                 case 'registration': return $app->registration($params);
-                case 'getProfile': return $app->getProfile($params);
                 case 'updateProfile': return $app->updateProfile($params);
                 case 'getLessons': return $app->getLessons();
                 case 'getShpora': return $app->getShpora($params);

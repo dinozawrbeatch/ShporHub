@@ -1,4 +1,5 @@
 <?php
+use parallel\Events\Event\Type;
 class DB {
     function __construct() {
         $host = 'localhost';
@@ -34,11 +35,9 @@ class DB {
     }
 
     public function getUserByToken($token) {
-        $query = "SELECT * 
-            FROM users 
-            WHERE token='$token'";
+        $query = "SELECT * FROM users WHERE token='$token'";
         return $this->db->query($query)
-            ->fetchObject();
+            ->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function getUsers() {
@@ -85,5 +84,16 @@ class DB {
         return $this->db->query($query)
             ->fetchObject();
     }
+
+    public function updateProfile($course, $group_id, $token)
+        {
+            $user = $this->getUserByToken($token);   
+            print_r($user);
+            if($user){
+                $query = "UPDATE users SET `course` = $course, `group_id`=$group_id WHERE users.token = '$token'";
+                return $this->db->query($query)
+                    ->fetchObject();
+            }
+        }
 }
 
