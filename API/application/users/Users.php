@@ -6,18 +6,17 @@ class Users
     }
 
     public function login($login, $hash, $rand) {
-        $hash = md5($login.$rand);
         $user = $this->db->getUser($login);
         if($user){
             if ($hash === md5($user->hash.$rand)) {
                 $token = md5($hash.rand());
                 $this->db->updateToken($user->id, $token);
                 return array(
-                    'name' => $user['name'],
-                    'login' => $user['login'],
-                    'token' => $user['token'],
-                    'group' => $user['group'],
-                    'course' => $user['course']
+                    'name' =>  $user->name,
+                    'login' => $user->login,
+                    'token' => $user->token,
+                    'group' => $user->group_id,
+                    'course'=> $user->course
                 );
             }
         }

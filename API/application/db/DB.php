@@ -3,9 +3,9 @@ class DB {
     function __construct() {
         $host = 'localhost';
         $port = '3306';
-        $name= 'shporhub';
+        $name = 'shporhub';
         $user = 'root';
-        $pass = 'root';
+        $pass = '';
         try {
             $this->db = new PDO(
                 'mysql:'.
@@ -81,8 +81,9 @@ class DB {
     }
 
     public function getGroup($id) {
-        $query = "SELECT * FROM groups WHERE id=".$id;
-        return $this->db->query($query)->fetchObject();
+        $query = "SELECT * FROM `groups` WHERE id=".$id;
+        return $this->db->query($query)
+            ->fetchObject();
     }
 }
 
