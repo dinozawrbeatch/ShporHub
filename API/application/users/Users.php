@@ -12,6 +12,7 @@ class Users
                 $token = md5($hash.rand());
                 $this->db->updateToken($user->id, $token);
                 return array(
+                    'id' => $user->id,
                     'name' =>  $user->name,
                     'login' => $user->login,
                     'token' => $token,

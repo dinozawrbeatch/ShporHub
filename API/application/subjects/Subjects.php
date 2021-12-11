@@ -6,9 +6,9 @@ class Subjects
         $this->db = $db;
     }
 
-    public function getLessons($token)
+    public function getLessons($token,$id)
     {
-        return $this->db->getLessons($token);
+        return $this->db->getLessons($token,$id);
     }
 
     public function uploadShpora($params)

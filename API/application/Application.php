@@ -73,8 +73,9 @@ class Application
     public function getLessons($params)
     {
         $token = $params['token'];
-        if($token) {
-            return $this->subjects->getLessons($token);
+        $id = $params['id'];
+        if($token && $id) {
+            return $this->subjects->getLessons($token, $id);
         }
     }
 

@@ -1,4 +1,5 @@
 <?php
+use MongoDB\Driver\Query;
 
 class DB
 {
@@ -40,9 +41,10 @@ class DB
 
     public function getUserByToken($token)
     {
-        $query = "SELECT * FROM users WHERE token='$token'";
+        $query = "SELECT * FROM `users` WHERE token='$token'";
         return $this->db->query($query)
             ->fetchAll(PDO::FETCH_ASSOC);
+
     }
 
     public function getUsers()
@@ -75,12 +77,6 @@ class DB
         return true;
     }
 
-    /*
-    function login($login, $rand)
-    {
-
-    }*/
-
     public function getGroups()
     {
         $query = "SELECT * FROM `groups`";
@@ -100,24 +96,21 @@ class DB
         $user = $this->getUserByToken($token);
         if ($user) {
             $query = "UPDATE users SET `course` = $course, `group_id`=$group_id WHERE users.token = '$token'";
-
             return $this->db->query($query)
                 ->fetchObject();
         }
     }
-    public function getLessons($token)
+    public function getLessons($token, $id)
     {
         $user = $this->getUserByToken($token);
         if ($user) {
             $query = "SELECT d.name,d.id FROM disciplines AS d
-                    INNER JOIN groups_discipline AS gd
-                    ON d.id=gd.discipline_id
-                    INNER JOIN users AS u
-                    ON u.id=18 AND u.group_id=gd.group_id";
-            return array(
-                $this->db->query($query)
-                    ->fetchObject(),
-            );
+                INNER JOIN groups_discipline AS gd
+                ON d.group_id=gd.discipline_id
+                INNER JOIN users AS u
+                ON u.id=$id AND u.group_id=gd.group_id AND u.course = d.course";
+            return $this->db->query($query)
+                ->fetchAll(PDO::FETCH_ASSOC);
         }
     }
 }
