@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.4
+-- version 5.1.0
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Ноя 15 2021 г., 14:38
--- Версия сервера: 8.0.19
--- Версия PHP: 7.3.26
+-- Время создания: Дек 11 2021 г., 15:40
+-- Версия сервера: 8.0.24
+-- Версия PHP: 7.3.29
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -30,17 +30,20 @@ SET time_zone = "+00:00";
 CREATE TABLE `disciplines` (
   `id` int NOT NULL,
   `name` varchar(32) NOT NULL,
-  `course` int NOT NULL
+  `course` int NOT NULL,
+  `group_id` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Дамп данных таблицы `disciplines`
 --
 
-INSERT INTO `disciplines` (`id`, `name`, `course`) VALUES
-(1, 'matan', 1),
-(2, 'aig', 1),
-(3, 'oop', 1);
+INSERT INTO `disciplines` (`id`, `name`, `course`, `group_id`) VALUES
+(1, 'Мат.Анализ', 1, 1),
+(2, 'Алгебра и геометрия', 1, 1),
+(3, 'Основы программирования', 1, 1),
+(4, 'История', 1, 1),
+(5, 'Право', 2, 1);
 
 -- --------------------------------------------------------
 
@@ -81,8 +84,8 @@ CREATE TABLE `groups_discipline` (
 
 INSERT INTO `groups_discipline` (`id`, `group_id`, `discipline_id`) VALUES
 (1, 1, 1),
-(2, 1, 2),
-(3, 1, 3);
+(2, 2, 2),
+(3, 3, 3);
 
 -- --------------------------------------------------------
 
@@ -124,7 +127,7 @@ INSERT INTO `users` (`id`, `login`, `name`, `hash`, `course`, `group_id`, `token
 (15, 'dadada', 'vasya', '2cfdb368ba1e20bd0d8c5b838f380843', 1, 1, '', 0),
 (16, 'fafafa', 'vasya', '601e55dcbe9ec76a8e980d9a16369069', 1, 1, '601e55dcbe9ec76a8e980d9a16369069', 0),
 (17, 'popapisya', 'vasya', '7c343f9872517c6a897106bcc09d88d3', 1, 1, '156269bf3d95a00891b9c584c9363237', 0),
-(18, 'elprimo', 'megachlen', 'b2691c960fb69e0a32cfeb991998fdf6', 1, 1, 'c728e9f13cce4f7de15c44df9cd832f1', 0),
+(18, 'elprimo', 'megachlen', 'b2691c960fb69e0a32cfeb991998fdf6', 1, 1, 'a7bb7ef6e1f418c0d9f1c027a48f755d', 0),
 (27, 'elprimo1', 'megachlen', '9a2e4e4167be98577fc1ee370510d23a', 1, 1, '489565cfa0d07713d1c685a38c30c555', 0),
 (28, 'elprimo12', '', '5b2d5982f1bb451c4232eb975cc6655b', 1, 1, '985659846af9ce7ee684e1232bef4ccb', 0);
 
@@ -170,7 +173,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT для таблицы `disciplines`
 --
 ALTER TABLE `disciplines`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT для таблицы `groups`
