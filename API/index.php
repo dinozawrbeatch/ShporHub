@@ -14,7 +14,7 @@
                 case 'logout': return $app->logout($params);
                 case 'registration': return $app->registration($params);
                 case 'updateProfile': return $app->updateProfile($params);
-                case 'getLessons': return $app->getLessons();
+                case 'getLessons': return $app->getLessons($params);
                 case 'getShpora': return $app->getShpora($params);
                 case 'uploadShpora': return $app->uploadShpora($params);
                 case 'getGroups': return $app->getGroups();

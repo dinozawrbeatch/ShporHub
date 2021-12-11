@@ -70,9 +70,12 @@ class Application
         }
     }
 
-    public function getLessons()
+    public function getLessons($params)
     {
-        return $this->subjects->getLessons();
+        $token = $params['token'];
+        if($token) {
+            return $this->subjects->getLessons($token);
+        }
     }
 
     public function getShpora($params)

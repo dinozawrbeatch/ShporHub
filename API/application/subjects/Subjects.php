@@ -3,18 +3,12 @@ class Subjects
 {
     function __construct($db)
     {
-       
+        $this->db = $db;
     }
 
-    public function getLessons()
+    public function getLessons($token)
     {
-        return array(
-            array('name' => 'Мат.Анализ', 'link' => 'mat_analiz'),
-            array('name' => 'Основы прогр-ия', 'link' => 'osnovi_programmirovaniya'),
-            array('name' => 'Алгебра и геометрия', 'link' => 'aig'),
-            array('name' => 'Дискретка', 'link' => 'diskretka'),
-            array('name' => 'Физ-ра', 'link' => 'ne_progulivay'),
-        );
+        return $this->db->getLessons($token);
     }
 
     public function uploadShpora($params)
