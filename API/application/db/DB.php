@@ -18,8 +18,9 @@ class DB
                 'dbname=' . $name,
                 $user,
                 $pass
-            );
-        } catch (Exception $e) {
+                );
+        }
+        catch (Exception $e) {
             print_r($e->getMessage());
             die();
         }
@@ -115,11 +116,40 @@ class DB
         }
     }
 
-    public function getShporsByLesson($discipline_id){
+    public function getShporsByLesson($discipline_id)
+    {
+        $imageType = '.jpg';
+        $link = 'http://shporhub/images/';
         $query = "SELECT * FROM `shpors` WHERE discipline_id ='$discipline_id' AND num = 1";
-        print_r($this->db->query($query)
-            ->fetchAll(PDO::FETCH_ASSOC));
-        return $this->db->query($query)
+        $answers = $this->db->query($query)
             ->fetchAll(PDO::FETCH_ASSOC);
+        $shpors = array();
+        foreach ($answers as $shpor) {
+            array_push($shpors, array(
+                'date' => $shpor['date'],
+                'type' => $shpor['type'],
+                'shpor_id' => $shpor['shpor_id'],
+                'description' => $shpor['description'],
+                'img' => $link . $shpor['file_name'] . $imageType,
+            ));
+        }
+        return $shpors;
+    }
+
+    public function getShporsById($shpor_id)
+    {
+        $imageType = '.jpg';
+        $link = 'http://shporhub/images/';
+        $query = "SELECT * FROM `shpors` WHERE shpor_id = $shpor_id";
+        $answer = $this->db->query($query)
+            ->fetchAll(PDO::FETCH_ASSOC);
+        $shpors = array();
+        foreach ($answer as $image) {
+            array_push($shpors, array(
+                'img' => $link . $image['file_name'] . $imageType,
+                'num' => $image['num'],
+            ));
+        }
+        return $shpors;
     }
 }

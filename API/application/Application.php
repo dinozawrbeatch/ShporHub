@@ -17,8 +17,8 @@ class Application
     public function login($params)
     {
         if ($params['login'] &&
-            $params['hash'] &&
-            $params['rand']
+        $params['hash'] &&
+        $params['rand']
         ) {
             return $this->users->login(
                 $params['login'],
@@ -41,10 +41,10 @@ class Application
     public function registration($params)
     {
         if ($params['login'] &&
-            $params['hash'] &&
-            $params['name'] &&
-            $params['course'] &&
-            $params['group']
+        $params['hash'] &&
+        $params['name'] &&
+        $params['course'] &&
+        $params['group']
         ) {
             return $this->users->registration(
                 $params['login'],
@@ -58,10 +58,10 @@ class Application
 
     public function updateProfile($params)
     {
-       
+
         if ($params['course'] &&
-            $params['group'] &&
-            $params['token']) {
+        $params['group'] &&
+        $params['token']) {
             return $this->profile->updateProfile(
                 $params['course'],
                 $params['group'],
@@ -74,14 +74,9 @@ class Application
     {
         $token = $params['token'];
         $id = $params['id'];
-        if($token && $id) {
+        if ($token && $id) {
             return $this->subjects->getLessons($token, $id);
         }
-    }
-
-    public function getShpora($params)
-    {
-        return $this->subjects->getShpora($params);
     }
 
     public function uploadShpora($params)
@@ -94,11 +89,18 @@ class Application
         return $this->users->getGroups();
     }
 
-    public function getShporsByLesson($params){
+    public function getShporsByLesson($params)
+    {
         $discipline_id = $params['discipline_id'];
-        print_r($discipline_id);
-        if($discipline_id){
-            return $this->subjects->getShporsByLesson($params);
+        if ($discipline_id) {
+            return $this->subjects->getShporsByLesson($discipline_id);
+        }
+    }
+    public function getShporsById($params)
+    {
+        $shpor_id = $params['shpor_id'];
+        if ($shpor_id) {
+            return $this->subjects->getShporsById($shpor_id);
         }
     }
 }
