@@ -96,8 +96,9 @@ class DB
         $user = $this->getUserByToken($token);
         if ($user) {
             $query = "UPDATE users SET `course` = $course, `group_id`=$group_id WHERE users.token = '$token'";
-            return $this->db->query($query)
+            $this->db->query($query)
                 ->fetchObject();
+            return true;
         }
     }
     public function getLessons($token, $id)
@@ -112,5 +113,13 @@ class DB
             return $this->db->query($query)
                 ->fetchAll(PDO::FETCH_ASSOC);
         }
+    }
+
+    public function getShporsByLesson($discipline_id){
+        $query = "SELECT * FROM `shpors` WHERE discipline_id ='$discipline_id' AND num = 1";
+        print_r($this->db->query($query)
+            ->fetchAll(PDO::FETCH_ASSOC));
+        return $this->db->query($query)
+            ->fetchAll(PDO::FETCH_ASSOC);
     }
 }

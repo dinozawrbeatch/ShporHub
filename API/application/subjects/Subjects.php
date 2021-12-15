@@ -6,6 +6,10 @@ class Subjects
         $this->db = $db;
     }
 
+    public function getShporsByLesson($discipline_id){
+        return $this->db->getShporsByLesson($discipline_id);
+    }
+
     public function getLessons($token,$id)
     {
         return $this->db->getLessons($token,$id);

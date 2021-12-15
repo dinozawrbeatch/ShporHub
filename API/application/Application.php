@@ -93,4 +93,12 @@ class Application
     {
         return $this->users->getGroups();
     }
+
+    public function getShporsByLesson($params){
+        $discipline_id = $params['discipline_id'];
+        print_r($discipline_id);
+        if($discipline_id){
+            return $this->subjects->getShporsByLesson($params);
+        }
+    }
 }
