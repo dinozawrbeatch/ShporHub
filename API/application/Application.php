@@ -17,9 +17,9 @@ class Application
     public function login($params)
     {
         if ($params['login'] &&
-        $params['hash'] &&
-        $params['rand']
-        ) {
+            $params['hash'] &&
+            $params['rand']
+        ){
             return $this->users->login(
                 $params['login'],
                 $params['hash'],
@@ -41,10 +41,10 @@ class Application
     public function registration($params)
     {
         if ($params['login'] &&
-        $params['hash'] &&
-        $params['name'] &&
-        $params['course'] &&
-        $params['group']
+            $params['hash'] &&
+            $params['name'] &&
+            $params['course'] &&
+            $params['group']
         ) {
             return $this->users->registration(
                 $params['login'],
@@ -60,8 +60,8 @@ class Application
     {
 
         if ($params['course'] &&
-        $params['group'] &&
-        $params['token']) {
+            $params['group'] &&
+            $params['token']) {
             return $this->profile->updateProfile(
                 $params['course'],
                 $params['group'],
