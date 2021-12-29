@@ -94,26 +94,21 @@ class DB
 
     public function updateProfile($course, $group_id, $token)
     {
-        $user = $this->getUserByToken($token);
-        if ($user) {
-            $query = "UPDATE users SET `course` = $course, `group_id`=$group_id WHERE users.token = '$token'";
-            $this->db->query($query)
-                ->fetchObject();
-            return true;
-        }
+        $query = "UPDATE users SET `course` = $course, `group_id`=$group_id WHERE users.token = '$token'";
+        $this->db->query($query)
+            ->fetchAll(PDO::FETCH_ASSOC);
+        return true;
     }
-    public function getLessons($token, $id)
+
+    public function getLessons($user, $id)
     {
-        $user = $this->getUserByToken($token);
-        if ($user) {
-            $query = "SELECT d.name,d.id FROM disciplines AS d
-                INNER JOIN groups_discipline AS gd
-                ON d.group_id=gd.discipline_id
-                INNER JOIN users AS u
-                ON u.id=$id AND u.group_id=gd.group_id AND u.course = d.course";
-            return $this->db->query($query)
-                ->fetchAll(PDO::FETCH_ASSOC);
-        }
+        $query = "SELECT d.name,d.id FROM disciplines AS d
+            INNER JOIN groups_discipline AS gd
+            ON d.group_id=gd.discipline_id
+            INNER JOIN users AS u
+            ON u.id=$id AND u.group_id=gd.group_id AND u.course = d.course";   
+        return  $this->db->query($query)
+            ->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function getShporsByLesson($discipline_id)

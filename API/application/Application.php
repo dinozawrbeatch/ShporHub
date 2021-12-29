@@ -4,11 +4,13 @@ require_once 'users/Users.php';
 require_once 'profile/Profile.php';
 require_once 'subjects/Subjects.php';
 
+
 class Application
 {
     public function __construct()
     {
         $db = new DB();
+        $this->db = $db;
         $this->users = new Users($db);
         $this->profile = new Profile($db);
         $this->subjects = new Subjects($db);
@@ -58,10 +60,13 @@ class Application
 
     public function updateProfile($params)
     {
-
+        $token = $params['token'];
+        $user = $this->db->getUserByToken($token);
         if ($params['course'] &&
             $params['group'] &&
-            $params['token']) {
+            $params['token'] &&
+            $user
+            ) {
             return $this->profile->updateProfile(
                 $params['course'],
                 $params['group'],
@@ -74,8 +79,9 @@ class Application
     {
         $token = $params['token'];
         $id = $params['id'];
-        if ($token && $id) {
-            return $this->subjects->getLessons($token, $id);
+        $user = $this->db->getUserByToken($token);
+        if ($id && $user) {
+            return $this->subjects->getLessons($user,$id);
         }
     }
 

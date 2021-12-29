@@ -16,9 +16,9 @@ class Subjects
         return $this->db->getShporsByLesson($discipline_id);
     }
 
-    public function getLessons($token, $id)
+    public function getLessons($user,$id)
     {
-        return $this->db->getLessons($token, $id);
+        return $this->db->getLessons($user,$id);
     }
 
     public function uploadShpora($params)
