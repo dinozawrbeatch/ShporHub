@@ -18,7 +18,7 @@
                 case 'uploadShpora': return $app->uploadShpora($params);
                 case 'getGroups': return $app->getGroups();
                 case 'getShporsByLesson': return $app->getShporsByLesson($params);
-                case 'getShporsById': return $app->getShporsById($params);
+                case 'getShporsById': return $app->getShporsById($params); 
             }
             return false;
         }

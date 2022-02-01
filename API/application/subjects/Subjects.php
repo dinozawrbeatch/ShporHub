@@ -48,7 +48,7 @@ class Subjects
                 $check = false;
             }
         }
-        print_r($params['data']);
+        print_r($params['time']);
         print_r($params['type']);
         print_r($params['description']);
 
