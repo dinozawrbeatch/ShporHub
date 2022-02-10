@@ -147,4 +147,53 @@ class DB
         }
         return $shpors;
     }
+
+    public function getNextShporId()
+    {
+        $query = "SELECT `shpor_id` FROM shpors ORDER BY id DESC LIMIT 1";
+        $lastId = $this->db->query($query)
+            ->fetchObject();
+        $lastId=(int)$lastId; 
+        return $lastId++;
+    }
+    public function uploadShpora($params)
+    {
+        $nextId = $this->getNextShporId();
+        $i = 0;
+        $check = true;
+        while ($check) {
+            if ($_FILES['questions_' . $i]['error'] == 0) {
+                $questionName = md5($_FILES['questions_' . $i]['name']);
+                $query ="INSERT INTO `shpors`
+                (file_name,min_file_name,discipline_id,num,description,type,shpor_id,date)
+                VALUE ('$questionName',' ',' ')";
+                move_uploaded_file($_FILES['questions_' . $i]['tmp_name'], '../images/' . $questionName . '.png');
+                $i++;
+            }
+
+            if ($i > 15) {
+                $check = false;
+            }
+        }
+
+        while($check) {
+            if ($_FILES['answers_' . $i]['error'] == 0) {
+                $answerName = $_FILES['answers_' . $i]['name'];
+                move_uploaded_file($_FILES['answers_' . $i]['tmp_name'], '../images/' . md5($answerName) . '.png');
+                $i++;
+            }
+
+            if ($i > 15) {
+                $check = false;
+            }
+        }
+
+        
+        
+        print_r($params['time']);
+        print_r($params['type']);
+        print_r($params['description']);
+
+        return 'Загрузка выполнена';
+    }
 }
